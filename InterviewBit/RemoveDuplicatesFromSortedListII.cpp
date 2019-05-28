@@ -7,18 +7,27 @@
  * };
  */
 ListNode* Solution::deleteDuplicates(ListNode* A) {
-    ListNode *dummyHead = new ListNode(0);
-    dummyHead -> next = A;
-    ListNode *prev = dummyHead, *head = A;
+    ListNode *head = NULL, *p;
     while(A) {
-        while(A -> next && A -> val == A -> next -> val)
+        if(A -> next && A -> val == A -> next -> val) {
+            int num = A -> val;
+            while(A && A -> val == num) {
+                A = A -> next;
+            }
+        }
+        else {
+            if(!head) {
+                head = A;
+                p = head;
+            }
+            else {
+                p -> next = A;
+                p = p -> next;
+            }
             A = A -> next;
-        if(prev -> next == A)
-            prev = prev -> next;
-        else 
-            prev -> next = A -> next;
-        A -> next;    
+        }
     }
-    return dummyHead -> next;
+    p -> next = NULL;
+    return head;
 }
 
