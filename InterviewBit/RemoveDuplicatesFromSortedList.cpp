@@ -5,12 +5,24 @@
  *     ListNode *next;
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
+ *
  */
+
 ListNode* Solution::deleteDuplicates(ListNode* A) {
-    ListNode* head = A;
-    while(A && A -> next) {
-        if(A -> val == A -> next -> val) {
-            A -> next = A -> next -> next;
+    bool flag = false;
+    ListNode *head = NULL, *p;
+    while(A) {
+        if(!head) {
+            if((A -> next && A -> val != A -> next -> val) || !(A -> next)) {
+                head = A;
+                p = head;
+            }
+        }
+        else {
+            if((A -> next && A -> val != A -> next -> val) || !(A -> next)) {
+                p -> next = A;
+                p = p -> next;
+            }
         }
         A = A -> next;
     }
