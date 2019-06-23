@@ -7,18 +7,17 @@
  * };
  */
 ListNode* Solution::reverseList(ListNode* A, int B) {
+    if(!A)
+        return A;
+    ListNode *head, *prev = NULL, *curr = A;
     int k = B;
-    ListNode* prev = NULL;
-    ListNode* curr = A;
-    ListNode* next = curr -> next;
-    while(k-- && curr != NULL) {
-        next = curr -> next;
+    while(curr && B--) {
+        ListNode* next = curr -> next;
         curr -> next = prev;
         prev = curr;
         curr = next;
     }
-    if(next)
-        A -> next = reverseList(next, B);
+    A -> next = reverseList(curr, k);
     return prev;
 }
 
