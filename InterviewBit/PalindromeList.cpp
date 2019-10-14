@@ -6,29 +6,34 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-int Solution::lPalin(ListNode* A) {
-    if(!A || !(A -> next))
-        return 1;
-    ListNode *slow = A, *prevSlow = NULL, *fast = A;
-    while(fast && fast -> next) {
-        prevSlow = slow;
-        slow = slow -> next;
-        fast = fast -> next -> next;
-    }
-    prevSlow -> next = NULL;
-    ListNode *prev = NULL, *curr = slow;
+ 
+ListNode* rev(ListNode* curr) {
+    ListNode *prev = NULL;
     while(curr) {
-        ListNode* next = curr -> next;
+        ListNode *next = curr -> next;
         curr -> next = prev;
         prev = curr;
         curr = next;
     }
-    while(prev && A) {
-        if(prev -> val != A -> val) {
+    return prev;
+}
+ 
+int Solution::lPalin(ListNode* A) {
+    ListNode *slow = A, *prev = NULL, *fast = A;
+    if(!A || !A -> next)
+        return 1;
+    while(fast && fast -> next) {
+        prev = slow;
+        slow = slow -> next;
+        fast = fast -> next -> next;
+    }
+    prev -> next = NULL;
+    ListNode* B = rev(slow);    
+    while(A && B) {
+        if(A -> val != B -> val)
             return 0;
-        }
-        prev = prev -> next;
         A = A -> next;
+        B = B -> next;
     }
     return 1;
 }
